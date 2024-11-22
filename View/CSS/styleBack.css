@@ -1,0 +1,29 @@
+/* Style for Remove button */
+.remove-btn {
+    background-color: #e74c3c; /* Red color for danger */
+    color: #fff; /* White text */
+    border: none; /* Remove default border */
+    padding: 8px 16px; /* Padding around the button */
+    font-size: 14px; /* Adjust font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Slightly rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and scale */
+}
+
+/* Hover effect for Remove button */
+.remove-btn:hover {
+    background-color: #c0392b; /* Darker red when hovered */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Focused state (for accessibility) */
+.remove-btn:focus {
+    outline: 2px solid #f39c12; /* Yellow outline when button is focused */
+    outline-offset: 2px; /* Slight offset for better visibility */
+}
+
+/* Active state (when clicked) */
+.remove-btn:active {
+    background-color: #e74c3c; /* Keeps the same red when clicked */
+    transform: scale(0.98); /* Slightly shrink the button when clicked */
+}
