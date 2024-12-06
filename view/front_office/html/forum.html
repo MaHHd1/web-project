@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Farmnet Forum</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- FontAwesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header_section">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/Farmnet(LOGO).png" alt="Farmnet Logo" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="shop.html">Shop</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="forum.html">Forum</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Forum Section -->
+    <div class="container mt-5">
+      <h1 class="mb-4">Forum</h1>
+      <p class="text-muted">Partagez vos idées et discutez avec d'autres utilisateurs.</p>
+
+      <!-- Recent Topics Section -->
+      <h2 class="mb-3">Sujets récents</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID Question</th>
+            <th>Titre</th>
+            <th>Date de Création</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><a href="#">Discussion générale</a></td>
+            <td>2024-12-04</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><a href="#">Problèmes techniques</a></td>
+            <td>2024-12-03</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- New Topic Form -->
+      <h2 class="mt-5">Ajouter un nouveau sujet</h2>
+      <form id="new_topic_form" method="post" action="/submit_topic">
+        <div class="form-group mb-3">
+          <label for="id_question">ID Question</label>
+          <input
+            type="text"
+            class="form-control"
+            id="id_question"
+            name="id_question"
+            placeholder="Entrez l'ID de la question"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="titre">Titre du Sujet</label>
+          <input
+            type="text"
+            class="form-control"
+            id="titre"
+            name="titre"
+            placeholder="Titre du sujet"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="message">Votre Message</label>
+          <textarea
+            class="form-control"
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Votre message"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group mb-3">
+          <label for="date_creation">Date de Création</label>
+          <input
+            type="datetime-local"
+            class="form-control"
+            id="date_creation"
+            name="date_creation"
+            value="2024-12-04T12:00"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Publier</button>
+      </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-light mt-5 p-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Liens Utiles</h5>
+            <ul class="list-unstyled">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Adresse</h5>
+            <p>Location, (+71) 1234567890, demo@gmail.com</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Suivez-nous</h5>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
