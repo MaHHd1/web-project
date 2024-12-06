@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass = $_POST['productPass'] ?? null;
     $lieu = $_POST['productLieu'] ?? null;
     $date = $_POST['productDate'] ?? null;
+    $datef = $_POST['productDatef'] ?? null;
     $image = null;
 
     // Validation des champs
-    if (empty($nom) || empty($description) || empty($pass) || empty($lieu) || empty($date)) {
+    if (empty($nom) || empty($description) || empty($pass) || empty($lieu) || empty($date) || empty($datef)) {
         die('Tous les champs sont obligatoires.');
     }
 
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Création d'un objet Produit
-    $produit = new Produit($nom, $description, (float)$pass, $lieu, $date, $image);
+    $produit = new Produit($nom, $description, (float)$pass, $lieu, $date , $datef, $image);
 
     // Ajout du produit via le contrôleur
     $produitsController = new ProduitsController();
@@ -778,8 +779,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <input type="text" id="productLieu" name="productLieu" class="form-control" required>
                         </div>
                         <div class="form-group">
-                          <label for="productDate">Date :</label>
+                          <label for="productDate">Date Debut :</label>
                           <input type="date" id="productDate" name="productDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="productDatef">Date Fin :</label>
+                          <input type="date" id="productDatef" name="productDatef" class="form-control" required>
                         </div>
                         <div class="form-group">
                           <label for="productImage">Image :</label>
@@ -949,6 +954,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </div>
                 </div>
               </div>
+        
             </div>
             <!-- End Custom template -->
           </div>
@@ -994,6 +1000,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               });
             });
           </script>
+          <script src="assets/js/ajouterProduit.js"></script>
 </body>
 
 </html>

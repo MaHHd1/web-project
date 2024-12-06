@@ -6,13 +6,15 @@ class Reservation
     private ?string $nom_p = null;
     private ?string $numero = null;
     private ?string $mail = null;
+    private ?int $quantite = null;
 
-    public function __construct(int $id, string $nom_p, string $numero, string $mail)
+    public function __construct(int $id, string $nom_p, string $numero, string $mail, int $quantite)
     {
         $this->id = $id;
         $this->nom_p = $nom_p;
         $this->numero = $numero;
         $this->mail = $mail;
+        $this->quantite = $quantite;
     }
 
     // Getters
@@ -40,6 +42,10 @@ class Reservation
     {
         return $this->mail;
     }
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
 
     // Setters
     public function setIdReservation(int $id_reservation): void
@@ -65,6 +71,10 @@ class Reservation
     public function setMail(string $mail): void
     {
         $this->mail = $mail;
+    }
+    public function setQuantite(int $quantite): void
+    {
+        $this->quantite = $quantite;
     }
 }
 ?>

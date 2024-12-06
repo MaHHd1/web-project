@@ -7,15 +7,17 @@ class Produit
     private ?float $pass = null;
     private ?string $lieu = null;
     private ?string $date = null;
+    private ?string $datef = null;
     private ?string $image = null;
 
-    public function __construct(String $nom, String $description, float $pass ,String $lieu,String $date, String $image)
+    public function __construct(String $nom, String $description, float $pass ,String $lieu,String $date, String $datef, string $image)
     {
         $this->nom = $nom;
         $this->description = $description;
         $this->pass = $pass;
         $this->lieu = $lieu;
         $this->date = $date;
+        $this->datef = $datef;
         $this->image = $image;
     }
     //getters pour accéder aux donnees un produit
@@ -42,6 +44,10 @@ class Produit
     public function getDate(): ?string
     {
         return $this->date;
+    }
+    public function getDatef(): ?string
+    {
+        return $this->datef;
     }
     public function getImage(): ?string
     {
@@ -72,6 +78,10 @@ class Produit
     public function setDate(float $date): void
     {
         $this->date = $date;
+    }
+    public function setDatef(float $datef): void
+    {
+        $this->datef = $datef;
     }
     public function setImage(string $image): void
     {

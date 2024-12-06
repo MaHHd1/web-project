@@ -759,10 +759,12 @@
                     <th scope="col">DESCRIPTION</th>
                     <th scope="col">Pass</th>
                     <th scope="col">Lieu</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Date Debut</th>
+                    <th scope="col">Date Fin</th>
                     <th scope="col">IMAGE</th>
                     <th scope="col">MISE A JOUR</th>
                     <th scope="col">SUPPRIMER</th>
+                    <th scope="col">VIEW</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -776,6 +778,7 @@
                               <td><?= $produit['pass']; ?></td>
                               <td><?= $produit['lieu']; ?></td>
                               <td><?= $produit['date']; ?></td>
+                              <td><?= $produit['datef']; ?></td>
                               <td>
                               <img src="data:image/png;base64,<?= base64_encode($produit['image']); ?>" alt="Product Image" style="width: 70px; height: 50px;">
                               </td>  
@@ -784,6 +787,9 @@
                                 </td>
                                 <td>
                                   <a href="supprimer.php?idP=<?php echo $produit['id']; ?>" class="btn btn-danger btn-sm">Supprimer</a>
+                                </td>
+                                <td>
+                                  <a href="view.php?idP=<?php echo $produit['id']; ?>" class="btn btn-primary btn-sm">View</a>
                                 </td>
                           </tr>
                       <?php

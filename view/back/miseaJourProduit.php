@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pass = $_POST['productPass'];
     $lieu = $_POST['productLieu'];
     $date = $_POST['productDate'];
+    $datef = $_POST['productDatef'];
     //verification des erreurs pour une image teléchargeé
     if (isset($_FILES['productImage']) && $_FILES['productImage']['error'] == UPLOAD_ERR_OK) {
         $image = file_get_contents($_FILES['productImage']['tmp_name']);
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image = $produit['image'];
     }
     //mise a jour avec les nouvelle donneé
-    $produit = new Produit($nom, $description, $pass,$lieu,$date ,$image);
+    $produit = new Produit($nom, $description , $pass , $lieu , $date , $datef ,$image);
     //mise a j fil bd avec updateProduit
     $Pc->updateProduit($produit,$productId);
     header('Location:index.php');
@@ -61,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           sessionStorage.fonts = true;
         },
       });
+      
     </script>
 
     <!-- CSS Files -->
@@ -70,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css" />
+    
   </head>
   <body>
     <div class="wrapper">
@@ -773,7 +776,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h1>Mise à jour un produit</h1>
                     </div>
                     <div class="card-body">
-                    <form method="POST" id="updateFrom"enctype="multipart/form-data">
+                    <form method="POST" id="updateForm" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="productName">Nom:</label>
                                 <input type="text" id="productName" name="productName" class="form-control" value="<?= $produit['nom']; ?>" required>
@@ -791,9 +794,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="text" id="productLieu" name="productLieu" step="0.01" class="form-control" value="<?= $produit['lieu']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="productDate">Date:</label>
-                                <input type="date" id="productDate" name="productDate" step="0.01" class="form-control" value="<?= $produit['date']; ?>" required>
-                            </div>
+    <label for="productDate">Date Debut:</label>
+    <input type="date" id="productDate" name="productDate" class="form-control" value="<?= $produit['date']; ?>" required>
+</div>
+<div class="form-group">
+    <label for="productDatef">Date Fin:</label>
+    <input type="date" id="productDatef" name="productDatef" class="form-control" value="<?= $produit['datef']; ?>" required>
+</div>
+
                             <div class="form-group">
                             <label for="productImage">Image:</label>
                                   <input type="file" id="productImage" name="productImage" class="form-control-file">
