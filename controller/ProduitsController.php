@@ -22,6 +22,44 @@ class ProduitsController
             die('Error: ' . $e->getMessage());
         }
     }
+    public function listProduitsByDateClosest($start = 0, $limit = 10)
+{
+    try {
+        $pdo = connexion::getConnexion();
+
+        $sql = "SELECT * FROM produitv 
+                WHERE date >= CURDATE() 
+                ORDER BY date ASC 
+                LIMIT :start, :limit";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die('PDO Error: ' . $e->getMessage());
+    }
+}
+
+
+    public function listProduitsByPrice($order = 'ASC', $start = 0, $limit = 10) {
+        try {
+            $pdo = connexion::getConnexion();
+    
+            $sql = "SELECT * FROM produitv ORDER BY pass $order LIMIT :start, :limit";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die('PDO Error: ' . $e->getMessage());
+        }
+    }
+    
+    
 
     public function listProduitPaginated($start, $limit)
     {

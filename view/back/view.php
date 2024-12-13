@@ -109,6 +109,7 @@ if (isset($_GET['idP'])) {
 </head>
 <body>
 
+
 <div class="container">
     <h2 class="text-center">Détails du Produit</h2>
     <div class="product-details">

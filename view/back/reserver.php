@@ -29,25 +29,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nom_p) || empty($numero) || empty($mail) || empty($quantite)) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        // Ajouter la réservation
-        //$reservation = new Reservation($id, $nom_p, $numero, $mail, $quantite);
-        //$controller = new ReservationController();
-        //$reservationId = $controller->addReservation($reservation);
+        // Préparer les données pour l'e-mail
+        $subject = "Confirmation de votre réservation";
+        $message = "Bonjour $nom_p,\n\nMerci pour votre réservation de $quantite places pour l'événement " . htmlspecialchars($produit['nom']) . ".\n\nCordialement,\nL'équipe.";
 
+        // Inclure le fichier d'envoi d'e-mail
+        require '../../i.php';
+ // Assurez-vous que le chemin est correct
+
+        // Passer les données à i.php et appeler la fonction d'envoi
+        $_POST['email'] = $mail; // Adresse e-mail du client
+        $_POST['subject'] = $subject;
+        $_POST['message'] = $message;
+
+        // Appeler la fonction d'envoi d'e-mail
+        sendEmail($_POST['email'], $_POST['subject'], $_POST['message']);
+        
         // Rediriger vers confirmation.php avec les paramètres nécessaires
         header("Location: confirmation.php?id=$id&nom_p=$nom_p&numero=$numero&mail=$mail&quantity=$quantite");
         exit();
     }
+
+   /* if (empty($error)) {
+        // Rediriger vers confirmation.php avec les paramètres nécessaires
+        header("Location: confirmation.php?id=$id&nom_p=$nom_p&numero=$numero&mail=$mail&quantity=$quantite");
+        
+      // Préparer les données pour l'e-mail
+      $subject = "Confirmation de votre réservation";
+      $message = "Bonjour $nom_p,\n\nMerci pour votre réservation de $quantite places pour l'événement " . htmlspecialchars($produit['nom']) . ".\n\nCordialement,\nL'équipe.";
+
+      // Inclure le fichier d'envoi d'e-mail
+      include 'i.php'; // Assurez-vous que le chemin est correct
+
+      // Passer les données à i.php et appeler la fonction d'envoi
+      $_POST['email'] = $mail; // Adresse e-mail du client
+      $_POST['subject'] = $subject;
+      $_POST['message'] = $message;
+      
+      // Appeler la fonction d'envoi d'e-mail
+      sendEmail($_POST['email'], $_POST['subject'], $_POST['message']);
+      
+      exit();
+    }*/
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Détails de l'Événement</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Shop</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- fevicon -->
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <!-- font css -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,800;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -304,9 +358,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         transform: translateX(-50%); /* Déplace le conteneur de la moitié de sa largeur */
     }
 }
+.checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
 
+        /* Style de base pour la checkbox */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
 
+        /* Couleur lorsqu'elle est cochée */
+        input[type="checkbox"]:checked {
+            background-color: #007bff;
+            border-color: #0056b3;
+        }
 
+        /* Texte associé */
+        label {
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -314,25 +394,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- Navbar -->
 <div class="header_section">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="Logo"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../back/index.php">Back Office</a></li>
-                    <li class="nav-item"><a class="nav-link" href="vagetables.html">Vagetables</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="navbar-brand"href="index.html"><img src="images/logo.png"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item">
+                     <a class="nav-link" href="/vegeee/view/front/index.php">Home</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="../back/index.php">Back Office</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="vagetables.html">Vagetables</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                     </li>
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                     <div class="search_icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                  </form>
+               </div>
+            </nav>
+         </div>
+      </div>
+
+
+      <p>.</p>
 <div class="highlight-section">
     <div class="highlight-slider">
         <img src="data:image/png;base64,<?= base64_encode($produit['image']); ?>" alt="<?= htmlspecialchars($produit['nom']); ?>">
@@ -382,6 +480,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Formulaire de réservation -->
 <div class="form-section">
     <h3>Réservez Votre Place</h3>
+    <div class="checkbox-container">
+        <input type="checkbox" id="emailCheckbox" />
+        <label for="emailCheckbox">Utiliser cet email pour vous connecter</label>
+    </div>
 
     <!-- Affichage des erreurs -->
     <?php if (!empty($error)): ?>
@@ -411,51 +513,120 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 </div>
-<!-- Footer -->
-<div class="footer_section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <h3>About Us</h3>
-                <ul>
-                    <li><a href="#">Company</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
+<!-- footer section start -->
+<div class="footer_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-4 col-sm-6">
+                  <h3 class="footer_text">Useful links</h3>
+                  <div class="footer_menu">
+                     <ul>
+                        <li class="active"><a href="index.html"><span class="angle_icon active"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Home</a></li>
+                        <li><a href="about.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  About</a></li>
+                        <li><a href="services.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Services</a></li>
+                        <li><a href="domain.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Domain</a></li>
+                        <li><a href="testimonial"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  Testimonial</a></li>
+                        <li><a href="contact.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  Contact Us</a></li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-sm-6">
+                  <h3 class="footer_text">Address</h3>
+                  <div class="location_text">
+                     <ul>
+                        <li>
+                           <a href="#">
+                           <span class="padding_left_10"><i class="fa fa-map-marker" aria-hidden="true"></i></span>It is a long established fact that a<br> reader will be distracted</a>
+                        </li>
+                        <li>
+                           <a href="#">
+                           <span class="padding_left_10"><i class="fa fa-phone" aria-hidden="true"></i></span>(+71) 1234567890<br>(+71) 1234567890
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                           <span class="padding_left_10"><i class="fa fa-envelope" aria-hidden="true"></i></span>demo@gmail.com
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-sm-6">
+                  <div class="footer_main">
+                     <h3 class="footer_text">Find Us</h3>
+                     <p class="dummy_text">more-or-less normal distribution </p>
+                     <div class="social_icon">
+                        <ul>
+                           <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                           <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                           <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="col-md-3">
-                <h3>Products</h3>
-                <ul>
-                    <li><a href="#">Vegetables</a></li>
-                    <li><a href="#">Fruits</a></li>
-                    <li><a href="#">Grains</a></li>
-                    <li><a href="#">Dairy</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li><a href="#">Contact Information</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+         </div>
+      </div>
+      <!-- footer section end -->
+      <!-- copyright section start -->
+      <div class="copyright_section">
+         <div class="container">
+            <p class="copyright_text">2023 All Rights Reserved. Design by <a href="https://html.design">Free html  Templates</a></p>
+         </div>
+      </div>
+      <!-- copyright section end -->
+      <!-- Javascript files-->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+
 
 <!-- End Footer -->
-<script src="reservation.js" defer></script>
+<script>
+document.getElementById('reservationForm').addEventListener('submit', function(event) {
+    // Empêcher l'envoi du formulaire par défaut
+    event.preventDefault();
 
+    // Récupérer les valeurs des champs
+    let nom_p = document.getElementById('nom_p').value.trim();
+    let numero = document.getElementById('numero').value.trim();
+    let mail = document.getElementById('mail').value.trim();
+    let quantite = document.getElementById('quantite').value.trim();
+
+    // Variable pour stocker les messages d'erreur
+    let errorMessages = [];
+
+    // Validation des champs
+    if (!nom_p) {
+        errorMessages.push("Le nom est obligatoire.");
+    }
+    if (!numero) {
+        errorMessages.push("Le numéro de téléphone est obligatoire.");
+    }
+    if (!mail) {
+        errorMessages.push("L'email est obligatoire.");
+    } else if (!validateEmail(mail)) {
+        errorMessages.push("L'email n'est pas valide.");
+    }
+    if (!quantite || quantite <= 0) {
+        errorMessages.push("La quantité doit être un nombre positif.");
+    }
+
+    // Afficher les erreurs ou soumettre le formulaire
+    if (errorMessages.length > 0) {
+        alert(errorMessages.join("\n")); // Afficher les erreurs
+    } else {
+        this.submit(); // Soumettre le formulaire si tout est valide
+    }
+});
+
+// Fonction de validation d'email
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+</script>
 </body>
 </html>
