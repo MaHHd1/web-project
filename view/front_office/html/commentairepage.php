@@ -78,6 +78,7 @@
                    $contenu = $_POST['contenu'];
                    $date_creation_cm = $_POST['date_creation_cm'];
                    $id_question = $_POST['id_question'];
+                   $recipientEmail = isset($_POST['email']) ? $_POST['email'] : null; // Check for the email key
 
                    // Check if the entered question ID exists in the database
                    $questionExists = false;
@@ -90,7 +91,7 @@
                    }
 
                    if ($questionExists) {
-                       if ($commentaireC->ajouterCommentaire($contenu, $date_creation_cm, $id_question)) {
+                       if ($commentaireC->ajouterCommentaire($contenu, $date_creation_cm, $id_question, $recipientEmail)) {
                            echo "<script>alert('Commentaire added successfully!');</script>";
                        } else {
                            echo "<script>alert('Unable to add commentaire.');</script>";
@@ -114,11 +115,15 @@
                      <label for="date_creation_cm">Creation Date:</label>
                      <input type="date" class="form-control" id="date_creation_cm" name="date_creation_cm" required>
                   </div>
+                  <div class="form-group">
+                     <label for="email">Recipient Email:</label>
+                     <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                </form>
             </div>
             <!-- add commentaire section end -->
-            </div>
+         </div>
       </div>
       <!-- footer section start -->
       <div class="footer_section layout_padding">
@@ -171,22 +176,4 @@
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
-      </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">2023 All Rights Reserved. Design by <a href="https://html.design">Free html  Templates</a></p>
-         </div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
-   </body>
-</html>
+            </div

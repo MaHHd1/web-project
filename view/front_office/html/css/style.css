@@ -1041,3 +1041,26 @@ p.dummy_text {
 .margin_bottom90 {
     margin-bottom: 90px;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-item a {
+    padding: 8px 12px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.page-item.active a {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}

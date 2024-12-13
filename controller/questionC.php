@@ -1,7 +1,7 @@
 <?php
 
-require_once  $_SERVER['DOCUMENT_ROOT'] . "/web/config.php";
-include_once  $_SERVER['DOCUMENT_ROOT'] . "/web/model/Question.php";
+require_once __DIR__ . "/../config.php";
+include_once __DIR__ . "/../model/Question.php";
 
 class QuestionC {
     public function ajouterQuestion($titre, $description, $date_creation) {
@@ -17,7 +17,7 @@ class QuestionC {
             ]);
             return true;
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
             return false;
         }
     }
@@ -31,7 +31,7 @@ class QuestionC {
             $query->execute();
             return $query;
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
             return false;
         }
     }
@@ -45,7 +45,7 @@ class QuestionC {
             $query->execute(['id_question' => $id]);
             return $query->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
             return false;
         }
     }
@@ -64,7 +64,7 @@ class QuestionC {
             ]);
             return true;
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
             return false;
         }
     }
@@ -78,7 +78,21 @@ class QuestionC {
             $query->execute(['id_question' => $id]);
             return true;
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getQuestion($offset = 0, $limit = 10) {
+        $db = Config::getConnexion();
+        try {
+            $stmt = $db->prepare("SELECT * FROM question LIMIT :offset, :limit");
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            error_log('Error in ' . __FUNCTION__ . ': ' . $e->getMessage());
             return false;
         }
     }

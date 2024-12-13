@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- mobile metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
     <title>List Questions</title>
@@ -39,18 +38,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item">
-                <a class="nav-link" href="questionpage.php">Question</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="commentairepage.php">Commentaire</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="listquestion.php">list questions</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="listcommentaire.php">list commentaires</a>
-              </li>
+                        <li class="nav-item"><a class="nav-link" href="questionpage.php">Question</a></li>
+                        <li class="nav-item"><a class="nav-link" href="commentairepage.php">Commentaire</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listquestion.php">List Questions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listcommentaire.php">List Commentaires</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -61,6 +52,7 @@
         </div>
     </div>
     <!-- header section end -->
+
     <!-- layout_border start -->
     <div class="container-fluid">
         <div class="layout_border">
@@ -68,80 +60,67 @@
             <div class="container">
                 <h2>List of Questions</h2>
                 <?php
-include_once '../../../controller/questionC.php';
+                include_once '../../../controller/questionC.php';
 
-$questionC = new QuestionC();
-$stmt = $questionC->getQuestions();
+                $questionC = new QuestionC();
 
-echo "<ul style='list-style-type: none; padding: 0;'>";
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo "<li style='margin-bottom: 20px;'>
-            <span style='font-size: 1.2em; font-weight: bold;'>Question ID:</span> " . $row['id_question'] . "<br>
-            <span style='font-size: 1.2em; font-weight: bold;'>Title:</span> " . $row['titre'] . "<br>
-            <span style='font-size: 1.2em; font-weight: bold;'>Description:</span> " . $row['description'] . "<br>
-            <span style='font-size: 1.2em; font-weight: bold;'>Creation Date:</span> " . $row['date_creation'] . "<br>
-            <a href='modifyquestion.php?id=" . $row['id_question'] . "' class='btn btn-success' style='margin-right: 10px;'>Modify</a>
-            <a href='deletequestion.php?id=" . $row['id_question'] . "' class='btn btn-danger' onclick=\"return confirm('Are you sure you want to delete this question?')\">Delete</a>
-          </li><br>";
-}
-echo "</ul>";
-?>
+                // Pagination logic
+                $limit = 5; // Number of questions per page
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page
+                $page = $page < 1 ? 1 : $page; // Ensure page is at least 1
+                $offset = ($page - 1) * $limit; // Offset calculation
 
+                // Get the total number of questions
+                $totalQuestions = $questionC->getQuestions()->rowCount(); // Assuming `getQuestions` retrieves all without limit
+                $totalPages = ceil($totalQuestions / $limit); // Total number of pages
+
+                // Fetch questions for the current page
+                $stmt = $questionC->getQuestions($offset, $limit);
+
+                // Display questions
+                if ($stmt->rowCount() > 0) {
+                    echo "<ul style='list-style-type: none; padding: 0;'>";
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<li style='margin-bottom: 20px;'>
+                                <span style='font-size: 1.2em; font-weight: bold;'>Question ID:</span> " . htmlspecialchars($row['id_question']) . "<br>
+                                <span style='font-size: 1.2em; font-weight: bold;'>Title:</span> " . htmlspecialchars($row['titre']) . "<br>
+                                <span style='font-size: 1.2em; font-weight: bold;'>Description:</span> " . htmlspecialchars($row['description']) . "<br>
+                                <span style='font-size: 1.2em; font-weight: bold;'>Creation Date:</span> " . htmlspecialchars($row['date_creation']) . "<br>
+                                <a href='modifyquestion.php?id=" . htmlspecialchars($row['id_question']) . "' class='btn btn-success' style='margin-right: 10px;'>Modify</a>
+                                <a href='deletequestion.php?id=" . htmlspecialchars($row['id_question']) . "' class='btn btn-danger' onclick=\"return confirm('Are you sure you want to delete this question?')\">Delete</a>
+                              </li><br>";
+                    }
+                    echo "</ul>";
+                } else {
+                    echo "<p>No questions found.</p>";
+                }
+
+                // Display pagination
+                if ($totalPages > 1) {
+                    echo "<nav aria-label='Page navigation'>";
+                    echo "<ul class='pagination justify-content-center'>";
+                    for ($i = 1; $i <= $totalPages; $i++) {
+                        echo "<li class='page-item " . ($i == $page ? "active" : "") . "'>
+                                <a class='page-link' href='listquestion.php?page=$i'>$i</a>
+                              </li>";
+                    }
+                    echo "</ul>";
+                    echo "</nav>";
+                }
+                ?>
             </div>
             <!-- list question section end -->
         </div>
     </div>
+
     <!-- footer section start -->
     <div class="footer_section layout_padding">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-sm-6">
-                    <h3 class="footer_text">Useful links</h3>
-                    <div class="footer_menu">
-                        <ul>
-                            <li class="active"><a href="index.html"><span class="angle_icon active"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Home</a></li>
-                            <li><a href="about.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  About</a></li>
-                            <li><a href="services.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Services</a></li>
-                            <li><a href="domain.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Domain</a></li>
-                            <li><a href="testimonial.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  Testimonial</a></li>
-                            <li><a href="contact.html"><span class="angle_icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>  Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <h3 class="footer_text">Address</h3>
-                    <div class="location_text">
-                        <ul>
-                            <li><a href="#"><span class="padding_left_10"><i class="fa fa-map-marker" aria-hidden="true"></i></span>It is a long established fact that a<br> reader will be distracted</a></li>
-                            <li><a href="#"><span class="padding_left_10"><i class="fa fa-phone" aria-hidden="true"></i></span>(+71) 1234567890<br>(+71) 1234567890</a></li>
-                            <li><a href="#"><span class="padding_left_10"><i class="fa fa-envelope" aria-hidden="true"></i></span>demo@gmail.com</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="footer_main">
-                        <h3 class="footer_text">Find Us</h3>
-                        <p class="dummy_text">more-or-less normal distribution </p>
-                        <div class="social_icon">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Add footer content here -->
         </div>
     </div>
     <!-- footer section end -->
-    <!-- copyright section start -->
-    <div class="copyright_section">
-        <div class="container">
-            <p class="copyright_text">2023 All Rights Reserved. Design by <a href="https://html.design">Free html  Templates</a></p>
-        </div>
-    </div>
-    <!-- copyright section end -->
+
     <!-- Javascript files-->
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
