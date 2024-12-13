@@ -2,40 +2,93 @@
 require_once '../../Controller/LoginController.php';
 require_once '../../Model/UserModel.php';
 
-$error = ""; // Initialize error message variable
-$success = ""; // Initialize success message variable
+$error = "";
+$success = "";
+$recaptcha_secret = "6LcHF5oqAAAAAFkbzbA12RY3yW9DrdoZSVSRLi_S"; // Replace with actual Secret Key
+session_start(); // Start the session to store CAPTCHA
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
-    // Sanitize input
+// Generate a random custom CAPTCHA string if it doesn't exist
+if (!isset($_SESSION['custom_captcha'])) {
+    $_SESSION['custom_captcha'] = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"), 0, 6);
+}
+if (isset($_POST['g-recaptcha-response'])) {
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+
+    // Make a POST request to Google's reCAPTCHA server
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+    $recaptcha = json_decode($recaptcha);
+
+    // Check if reCAPTCHA was successful
+    if (!$recaptcha->success) {
+        $error = "CAPTCHA verification failed. Please try again.";
+    }
+} else {
+    $error = "Please complete the CAPTCHA.";
+}
+// Handle Signup
+if (isset($_POST['signup']) && empty($error)) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
     if (!empty($email) && !empty($password)) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Hash the password
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            // Create a User object with the hashed password
-            $user = new User($email, $hashedPassword);
-
-            // Create a LoginController instance
             $loginController = new LoginController();
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Call the signup method and handle response
-            if ($loginController->signup($user)) {
-                $success = "Signup successful!";
+            // Register new user with privilege = 0
+            if ($loginController->registerUser($email, $passwordHash, 0)) {
+                $success = "Signup successful! You can now log in.";
             } else {
-                $error = "Signup failed. Email may already be in use.";
+                $error = "Signup failed. Email already exists or another error occurred.";
             }
         } else {
             $error = "Invalid email format.";
         }
     } else {
-        $error = "Please fill in all fields.";
+        $error = "All fields are required.";
     }
 }
-?>
 
+// Handle Login
+// Handle Login
+if (isset($_POST['signin'])) {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+    if (!empty($email) && !empty($password)) {
+        $loginController = new LoginController();
+
+        // Create a User object with the provided email and password
+        $user = new User($email, $password);
+
+        // Check if the user is valid and sign them in
+        $result = $loginController->signin($user);
+
+        if ($result === "admin") {
+            // Get admin details (name and profile image) from the database
+            $adminDetails = $loginController->getAdminDetails($email);
+            // Set session variables for the admin name and image
+            $_SESSION['admin_name'] = $adminDetails['Uname'];  // Admin's name from the database
+            $_SESSION['admin_image'] = $adminDetails['IMG'];  // Admin's profile image
+
+            // Redirect to the admin dashboard
+            header("Location: ../BackOffice/index.php");
+            exit;
+        } elseif ($result === "user") {
+            // If user, redirect to the profile page
+            header("Location: profile.php");
+            exit;
+        } else {
+            // If invalid credentials
+            $error = "Invalid email or password.";
+        }
+    } else {
+        $error = "All fields are required.";
+    }
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -43,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website with Login & Signup Form | CodingNepal</title>
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <title>Website with Login & Signup Form</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 <body>
 <header>
@@ -65,13 +118,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
             <li><a href="#">About us</a></li>
             <li><a href="#">Contact us</a></li>
         </ul>
-        <button class="login-btn">LOG IN</button>
+        <button class="login-btn" id="login-btn">LOG IN</button>
     </nav>
 </header>
 
 <div class="blur-bg-overlay"></div>
 <div class="form-popup">
     <span class="close-btn material-symbols-rounded">close</span>
+
+    <!-- Display error or success messages -->
+    <?php if ($error): ?>
+        <div class="error-message"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+    <?php if ($success): ?>
+        <div class="success-message"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+
+    <!-- Login Form -->
     <div class="form-box login">
         <div class="form-details">
             <h2>Welcome Back</h2>
@@ -79,14 +142,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
         </div>
         <div class="form-content">
             <h2>LOGIN</h2>
-            <form method="POST" action="login.php">
+            <form method="post" action="login.php">
                 <div class="input-field">
-                    <input type="text" name="email" required>
+                    <input type="email" name="email" required>
                     <label>Enter your email</label>
                 </div>
                 <div class="input-field">
                     <input type="password" name="password" required>
-                    <label>Create password</label>
+                    <label>Enter your password</label>
                 </div>
                 <div class="policy-text">
                     <input type="checkbox" id="policy" required>
@@ -95,17 +158,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
                         <a href="#" class="option">Terms & Conditions</a>
                     </label>
                 </div>
-                <button type="submit" name="signup">Sign Up</button>
-
-                <!-- Display error or success messages -->
-                <?php if (!empty($error)): ?>
-                    <p style="color: red; margin-top: 10px;"><?php echo $error; ?></p>
-                <?php endif; ?>
-                <?php if (!empty($success)): ?>
-                    <p style="color: green; margin-top: 10px;"><?php echo $success; ?></p>
-                <?php endif; ?>
+                <div class="g-recaptcha" data-sitekey="6LcHF5oqAAAAAKbr_gZ-hVznO3hcuVPt5umdjNjs"></div>
+                <button type="submit" name="signin">Sign In</button>
             </form>
 
+            <!-- Forgot Password Link -->
+            <div class="bottom-link">
+                <a href="password.php">Forgot your password?</a>
+            </div>
 
             <div class="bottom-link">
                 Don't have an account?
@@ -113,6 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
             </div>
         </div>
     </div>
+
+    <!-- Signup Form -->
     <div class="form-box signup">
         <div class="form-details">
             <h2>Create Account</h2>
@@ -122,12 +184,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
             <h2>SIGNUP</h2>
             <form method="POST" action="login.php">
                 <div class="input-field">
-                    <input type="text" name="email" required>
+                    <input type="email" name="email" required>
                     <label>Enter your email</label>
                 </div>
                 <div class="input-field">
                     <input type="password" name="password" required>
-                    <label>Create password</label>
+                    <label>Create a password</label>
                 </div>
                 <div class="policy-text">
                     <input type="checkbox" id="policy" required>
@@ -137,16 +199,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
                     </label>
                 </div>
                 <button type="submit" name="signup">Sign Up</button>
-
-                <!-- Display error or success messages -->
-                <?php if (!empty($error)): ?>
-                    <p style="color: red; margin-top: 10px;"><?php echo $error; ?></p>
-                <?php endif; ?>
-                <?php if (!empty($success)): ?>
-                    <p style="color: green; margin-top: 10px;"><?php echo $success; ?></p>
-                <?php endif; ?>
+                <p class="error-message"></p>
             </form>
-
             <div class="bottom-link">
                 Already have an account?
                 <a href="#" id="login-link">Login</a>
@@ -156,5 +210,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 </div>
 </body>
 </html>
-
-

@@ -15,54 +15,43 @@ hamburgerBtn.addEventListener("click", () => {
 });
 
 // Hide mobile menu
-hideMenuBtn.addEventListener("click", () => hamburgerBtn.click());
+hideMenuBtn.addEventListener("click", () => {
+    navbarMenu.classList.remove("show-menu");
+});
 
 // Show login popup
 showPopupBtn.addEventListener("click", () => {
-    document.body.classList.toggle("show-popup");
+    document.body.classList.add("show-popup");
     trapFocus(formPopup);
 });
 
 // Hide login popup
 hidePopupBtn.addEventListener("click", () => {
-    showPopupBtn.click();
-    loginForm.reset();
-    signupForm.reset();
-    clearErrorMessages();
+    document.body.classList.remove("show-popup");
+    resetFormsAndErrors();
 });
 
-// Show or hide signup form
+// Toggle between login and signup forms
 signupLoginLink.forEach(link => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        formPopup.classList[link.id === 'signup-link' ? 'add' : 'remove']("show-signup");
+        formPopup.classList.toggle("show-signup", link.id === 'signup-link');
     });
 });
 
 // Form Validation
-function validateForm(form) {
-    const email = form.querySelector("input[name='email']").value.trim();
-    const password = form.querySelector("input[name='password']").value.trim();
-    const errorMessage = form.querySelector(".error-message");
 
-    // Simple validation checks
-    if (!email || !password) {
-        if (errorMessage) errorMessage.textContent = "All fields are required.";
-        return false;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-        if (errorMessage) errorMessage.textContent = "Invalid email format.";
-        return false;
-    }
-    if (password.length < 6) {
-        if (errorMessage) errorMessage.textContent = "Password must be at least 6 characters.";
-        return false;
-    }
-    if (errorMessage) errorMessage.textContent = ""; // Clear errors if valid
-    return true;
+
+// Reset forms and error messages
+function resetFormsAndErrors() {
+    loginForm.reset();
+    signupForm.reset();
+    document.querySelectorAll(".error-message").forEach(message => {
+        message.textContent = "";
+    });
 }
 
-// Prevent double submissions
+// Prevent duplicate submissions
 function preventDoubleSubmission(form) {
     form.addEventListener("submit", () => {
         const submitButton = form.querySelector("button[type='submit']");
@@ -71,25 +60,11 @@ function preventDoubleSubmission(form) {
     });
 }
 
-// Clear error messages
-function clearErrorMessages() {
-    document.querySelectorAll(".error-message").forEach(message => {
-        message.textContent = "";
-    });
-}
+// Apply validation and prevent default if invalid
 
-// Apply validation and submission protection
-loginForm.addEventListener("submit", (e) => {
-    if (!validateForm(loginForm)) e.preventDefault();
-});
-signupForm.addEventListener("submit", (e) => {
-    if (!validateForm(signupForm)) e.preventDefault();
-});
 
-preventDoubleSubmission(loginForm);
-preventDoubleSubmission(signupForm);
 
-// Accessibility: Focus Trapping
+// Accessibility: Focus trapping
 function trapFocus(popup) {
     const focusableElements = popup.querySelectorAll("button, input, a, [tabindex='0']");
     const firstElement = focusableElements[0];
@@ -97,33 +72,22 @@ function trapFocus(popup) {
 
     popup.addEventListener("keydown", (e) => {
         if (e.key === "Tab") {
-            if (e.shiftKey) { // Shift + Tab
-                if (document.activeElement === firstElement) {
-                    e.preventDefault();
-                    lastElement.focus();
-                }
-            } else { // Tab
-                if (document.activeElement === lastElement) {
-                    e.preventDefault();
-                    firstElement.focus();
-                }
+            if (e.shiftKey && document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
             }
         }
     });
 }
 
-// Clear inputs and error messages when popup is hidden
-hidePopupBtn.addEventListener("click", () => {
-    loginForm.reset();
-    signupForm.reset();
-    clearErrorMessages();
-});
-
-// Smooth Scrolling for Internal Links
+// Smooth scrolling for internal links
 document.querySelectorAll("a[href^='#']").forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
+    anchor.addEventListener("click", (e) => {
         e.preventDefault();
-        document.querySelector(this.getAttribute("href")).scrollIntoView({
+        document.querySelector(anchor.getAttribute("href")).scrollIntoView({
             behavior: "smooth"
         });
     });
