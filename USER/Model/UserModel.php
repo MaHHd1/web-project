@@ -5,6 +5,8 @@ class User
     private $id;
     private $mail;
     private $psw;
+    private $uname;
+    private $country;
 
     public function __construct($mail = null, $psw = null, $id = null)
     {
@@ -27,10 +29,25 @@ class User
     {
         return $this->psw;
     }
+
+    public function getUname()
+    {
+        return $this->uname;
+    }
+
+    public function setUname($uname)
+    {
+        $this->uname = $uname;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
 }
 ?>
-
-
-
-
-
