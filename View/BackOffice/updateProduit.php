@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Edit Profile</h5>
+                <h5 class="title">Update Produit</h5>
               </div>
               <div class="card-body">
               <form method="POST" enctype="multipart/form-data">
@@ -255,16 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card card-user">
-              <div class="image">
-                <img src="../assets/img/bg5.jpg" alt="...">
-              </div>
-              <div class="card-body">
-                <div class="author">
-                  <a href="#">
-                    <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-                    <h5 class="title">Mike Andrew</h5>
+          <!--tle">Mike Andrew</h5>
                   </a>
                   <p class="description">
                     michael24
@@ -291,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>

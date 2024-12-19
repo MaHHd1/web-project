@@ -3,22 +3,7 @@ include '../../controller/ProduitController.php';
 $produitC = new ProduitController();
 $list = $produitC->listProduit();
 ?>
-<!--
 
-=========================================================
-* Now UI Dashboard - v1.5.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/now-ui-dashboard
-* Copyright 2019 Creative Tim (http://www.creative-tim.com)
-
-* Designed by www.invisionapp.com Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +42,7 @@ $list = $produitC->listProduit();
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li>
+          <!--<li>
             <a href="./dashboard.html">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
@@ -80,25 +65,25 @@ $list = $produitC->listProduit();
               <i class="now-ui-icons ui-1_bell-53"></i>
               <p>Notifications</p>
             </a>
-          </li>
+          </li>-->
           <li>
-            <a href="./user.html">
+            <a href="addProduit.php">
               <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
+              <p>Add Product</p>
             </a>
           </li>
           <li class="active ">
-            <a href="./tables.html">
+            <a href="tables.php">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Table List</p>
+              <p>Product List</p>
             </a>
           </li>
-          <li>
+          <!--<li>
             <a href="./typography.html">
               <i class="now-ui-icons text_caps-small"></i>
               <p>Typography</p>
             </a>
-          </li>
+          </li>-->
           <li class="active-pro">
             <a href="./upgrade.html">
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
@@ -180,7 +165,7 @@ $list = $produitC->listProduit();
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
+                <h4 class="card-title">Liste Produits</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -201,7 +186,7 @@ $list = $produitC->listProduit();
             echo "<td>" . $produit['nomproduit'] . "</td>";
             echo "<td>" . $produit['prix'] . "</td>";
             echo "<td>" . $produit['quantite'] . "</td>";
-            echo "<td><img src='" . $produit['image'] . "' width='50' height='50'></td>";
+            echo "<td><img src='uploads/" . htmlspecialchars($produit['image']) . "' width='50' height='50'></td>";
             echo "<td>
                     <a href='updateProduit.php?id=" . $produit['id'] . "' class='btn btn-warning'>Modifier</a>
                     <a href='deleteProduit.php?id=" . $produit['id'] . "' class='btn btn-danger'>Supprimer</a>
@@ -213,7 +198,7 @@ $list = $produitC->listProduit();
               </div>
             </div>
           </div>
-          <div class="col-md-12">
+          <!--<div class="col-md-12">
             <div class="card card-plain">
               <div class="card-header">
                 <h4 class="card-title"> Table on Plain Background</h4>
@@ -342,14 +327,14 @@ $list = $produitC->listProduit();
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
             <ul>
               <li>
                 <a href="https://www.creative-tim.com">
-                  Creative Tim
+                  Farmnet
                 </a>
               </li>
               <li>
@@ -367,7 +352,7 @@ $list = $produitC->listProduit();
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Farmnet</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Farmnet</a>.
           </div>
         </div>
       </footer>

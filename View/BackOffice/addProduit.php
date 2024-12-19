@@ -2,7 +2,7 @@
 include '../../controller/ProduitController.php';
 
 $error = "";
-$uploadDir = __DIR__ . '/../../uploads/'; // Utilisation d'un chemin absolu
+$uploadDir = __DIR__ . '../uploads/'; // Utilisation d'un chemin absolu
 
 if (
     isset($_POST["nomproduit"]) && 
@@ -11,7 +11,7 @@ if (
     isset($_FILES["image"])
 ) {
     if (
-        !empty($_POST["nomproduit"]) &&
+        !empty($_POST["nomproduit"]) &&                                              
         !empty($_POST["prix"]) &&
         !empty($_POST["quantite"]) &&
         !empty($_FILES["image"]["name"])
@@ -107,15 +107,15 @@ if (
     -->
       <div class="logo">
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
+          
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          Farmnet
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li>
+          <!--<li>
             <a href="./dashboard.html">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
@@ -138,25 +138,25 @@ if (
               <i class="now-ui-icons ui-1_bell-53"></i>
               <p>Notifications</p>
             </a>
-          </li>
+          </li>-->
           <li class="active ">
-            <a href="./user.html">
+            <a href="addProduit.php">
               <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
+              <p>Add Product</p>
             </a>
           </li>
           <li>
-            <a href="./tables.html">
+            <a href="tables.php">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Table List</p>
+              <p>Product List</p>
             </a>
           </li>
-          <li>
+          <!--<li>
             <a href="./typography.html">
               <i class="now-ui-icons text_caps-small"></i>
               <p>Typography</p>
             </a>
-          </li>
+          </li>-->
           <li class="active-pro">
             <a href="./upgrade.html">
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
@@ -238,7 +238,7 @@ if (
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Edit Profile</h5>
+                <h5 class="title">Add Produit</h5>
               </div>
               <div class="card-body">
                 <form action="addproduit.php" method="POST" enctype="multipart/form-data">
@@ -264,7 +264,7 @@ if (
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <!--<div class="col-md-4">
             <div class="card card-user">
               <div class="image">
                 <img src="../assets/img/bg5.jpg" alt="...">
@@ -300,14 +300,14 @@ if (
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
             <ul>
               <li>
                 <a href="https://www.creative-tim.com">
-                  Creative Tim
+                  Farmnet
                 </a>
               </li>
               <li>
@@ -325,7 +325,7 @@ if (
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </script>, Designed by <a href="listeProduit.php" target="_blank">Farmnet</a>. Coded by <a href="View\FrontOffice\listeProduit.php" target="_blank">Farmnet</a>.
           </div>
         </div>
       </footer>
