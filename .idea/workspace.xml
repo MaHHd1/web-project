@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4ca58d9d-1a38-4bb2-8d60-a11485f6358c" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerConfigs">
+    <option name="configs">
+      <option value="$PROJECT_DIR$/View/FrontOffice2/twilio-php-main/composer.json" />
+    </option>
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/View/FrontOffice2/login.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2owUNDDhnWsK7UgEmgbBckLu6uh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/xampp/htdocs/vegeee",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/View/BackOffice/assets/images" />
+      <recent name="$PROJECT_DIR$/View/BackOffice/assets/images/users" />
+      <recent name="C:\xampp\htdocs\USER\View\FrontOffice" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\USER\View\FrontOffice2" />
+      <recent name="$PROJECT_DIR$/View/BackOffice/assets/images" />
+      <recent name="C:\xampp\htdocs\USER\Model" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PS-243.21565.202" />
+        <option value="bundled-php-predefined-a98d8de5180a-5fbe0c30323e-com.jetbrains.php.sharedIndexes-PS-243.21565.202" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ca58d9d-1a38-4bb2-8d60-a11485f6358c" name="Changes" comment="" />
+      <created>1731780089752</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731780089752</updated>
+      <workItem from="1731780090787" duration="18736000" />
+      <workItem from="1732117723945" duration="985000" />
+      <workItem from="1732118714552" duration="677000" />
+      <workItem from="1732119520809" duration="2093000" />
+      <workItem from="1732121620340" duration="5612000" />
+      <workItem from="1732128036320" duration="23351000" />
+      <workItem from="1732557561398" duration="6944000" />
+      <workItem from="1732635641141" duration="4853000" />
+      <workItem from="1732640544682" duration="2089000" />
+      <workItem from="1732709232901" duration="5024000" />
+      <workItem from="1732714313611" duration="7152000" />
+      <workItem from="1732814876099" duration="7651000" />
+      <workItem from="1732905534891" duration="91000" />
+      <workItem from="1732906406858" duration="158000" />
+      <workItem from="1732906704723" duration="20000" />
+      <workItem from="1733403685320" duration="20435000" />
+      <workItem from="1733656254671" duration="19475000" />
+      <workItem from="1734039539743" duration="13406000" />
+      <workItem from="1734079756330" duration="5821000" />
+      <workItem from="1734176236834" duration="1241000" />
+      <workItem from="1734177629988" duration="373000" />
+      <workItem from="1734180277308" duration="2621000" />
+      <workItem from="1734263048325" duration="10278000" />
+      <workItem from="1734353617221" duration="21932000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

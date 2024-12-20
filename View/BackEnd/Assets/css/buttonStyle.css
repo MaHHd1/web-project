@@ -1,0 +1,60 @@
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+/* Hide the default file input */
+.image-upload-input {
+    display: none;
+}
+
+/* Style the label to look like a button */
+.image-upload-label {
+    display: inline-block;
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Spacing around the text */
+    font-size: 16px; /* Font size */
+    font-weight: bold; /* Bold text */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor indicating the button is clickable */
+    text-transform: uppercase; /* Uppercase text */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Change the background color when hovering over the label */
+.image-upload-label:hover {
+    background-color: #0056b3; /* Darker blue when hovering */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Make the button look pressed when clicked */
+.image-upload-label:active {
+    background-color: #004085; /* Even darker blue when clicked */
+    transform: translateY(0); /* Reset the lift effect */
+}
+
+/* Optional: Style the file name text that appears after an image is selected */
+#image {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555; /* Text color for the file name */
+}

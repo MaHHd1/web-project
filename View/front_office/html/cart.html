@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>Shop</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <!-- font css -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,800;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+  <script defer src="cart.js"></script> <!-- Link to your JavaScript file -->
+</head>
+<body>
+    <div class="header_section">
+        <div class="container-fluid">
+           <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand"href="index.html"><img src="images/Farmnet(LOGO).png"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="vagetables.html">Vagetables</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="cart.html">Cart</a>
+                   </li>
+                 </ul>
+                 <form class="form-inline my-2 my-lg-0">
+                    <div class="search_icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                 </form>
+              </div>
+           </nav>
+        </div>
+     </div>
+     <!-- header section end -->
+  <div class="cart_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="cart_title">Shopping Cart</h1>
+          <p class="cart_text">Review and manage the items in your cart</p>
+        </div>
+      </div>
+      <div class="cart_items">
+        <!-- Items will be dynamically added here -->
+      </div>
+      <div class="cart_summary">
+        <h3>Total: $<span id="cart-total">0.00</span></h3>
+        <button class="checkout_btn">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code to handle adding items from shop.html to cart.html
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function renderCart() {
+      const cartContainer = document.querySelector('.cart_items');
+      cartContainer.innerHTML = '';
+      let total = 0;
+
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = '<p>Your cart is empty!</p>';
+      } else {
+        cartItems.forEach((item, index) => {
+          total += item.price;
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart_item';
+          cartItem.innerHTML = `
+            <div class="cart_item_details">
+              <img src="${item.image}" alt="${item.name}" class="cart_item_image">
+              <h3 class="cart_item_name">${item.name}</h3>
+              <h3 class="cart_item_price">$${item.price.toFixed(2)}</h3>
+            </div>
+            <button class="remove_btn" onclick="removeItem(${index})">Remove</button>
+          `;
+          cartContainer.appendChild(cartItem);
+        });
+      }
+      document.getElementById('cart-total').textContent = total.toFixed(2);
+    }
+
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
